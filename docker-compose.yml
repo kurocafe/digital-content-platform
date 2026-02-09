@@ -1,6 +1,7 @@
 services:
   frontend:
     build: ./frontend
+    container_name: dcp-frontend  # digital content platform
     ports:
       - "3000:3000"
     volumes:
@@ -8,9 +9,16 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=development
+    env_file:
+      - .env
+    networks:
+      - dcp-networks
+    tty: true
+    stdin_open: true
 
   backend:
     build: ./backend
+    container_name: dcp-backend  # digital content platform
     ports:
       - "4000:4000"
     volumes:
@@ -18,3 +26,12 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=development
+    env_file:
+      - .env
+    networks:
+      - dcp-networks
+    tty: true
+    stdin_open: true
+
+networks:
+  dcp-networks:
